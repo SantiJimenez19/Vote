@@ -8,7 +8,7 @@ namespace Vote.Web.Data.Entities
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class Result
+    public class Results
     {
         public int Id { get; set; }
 

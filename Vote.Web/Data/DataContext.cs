@@ -9,7 +9,7 @@ namespace Vote.Web.Data
 
     public class DataContext : DbContext
     {
-        public DbSet<Users> User { get; set; }
+        public DbSet<Results> User { get; set; }
 
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {

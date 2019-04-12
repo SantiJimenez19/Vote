@@ -15,38 +15,27 @@ namespace Vote.Web.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Vote.Web.Data.Entities.Users", b =>
+            modelBuilder.Entity("Vote.Web.Data.Entities.Results", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("Birthdate");
+                    b.Property<int>("Candidates");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("Description");
 
-                    b.Property<string>("Country")
-                        .IsRequired();
+                    b.Property<DateTime>("EndDate");
 
-                    b.Property<string>("Gender");
+                    b.Property<string>("Name");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<DateTime>("StartDate");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50);
-
-                    b.Property<string>("Occupation");
-
-                    b.Property<string>("Stratum");
+                    b.Property<int>("Votes");
 
                     b.HasKey("Id");
 
