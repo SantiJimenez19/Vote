@@ -20,10 +20,13 @@ namespace Vote.Web
         {
             Configuration = configuration;
         }
+ 
+
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -32,6 +35,10 @@ namespace Vote.Web
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddTransient<SeedDb>();
+            services.AddScoped<IRepository, Repository>();
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IUserHelper , UserHelper>
 
 
             services.Configure<CookiePolicyOptions>(options =>
