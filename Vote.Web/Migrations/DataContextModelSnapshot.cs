@@ -27,11 +27,13 @@ namespace Vote.Web.Migrations
 
                     b.Property<int>("Candidates");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTime>("StartDate");
 

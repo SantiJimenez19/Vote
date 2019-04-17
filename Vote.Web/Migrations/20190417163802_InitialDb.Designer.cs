@@ -10,7 +10,7 @@ using Vote.Web.Data;
 namespace Vote.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190417152428_InitialDb")]
+    [Migration("20190417163802_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,11 +29,13 @@ namespace Vote.Web.Migrations
 
                     b.Property<int>("Candidates");
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.Property<DateTime>("EndDate");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<DateTime>("StartDate");
 
