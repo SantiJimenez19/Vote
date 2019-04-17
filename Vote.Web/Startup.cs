@@ -35,7 +35,7 @@ namespace Vote.Web
                 cfg.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
             });
 
-
+            services.AddTransient<SeedDb>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {

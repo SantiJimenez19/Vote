@@ -10,6 +10,14 @@ namespace Vote.Web.Data
     {
         public DbSet<Event> Events { get; set; }
 
+     /*   public DbSet<Country>Countries{ get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<User> Users { get; set; }
+
+        public DbSet<Vote> Votes { get; set; }*/
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
