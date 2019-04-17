@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Vote.Web.Data.Entities
 {
-    public class Country
+    public class User
     {
     }
 }

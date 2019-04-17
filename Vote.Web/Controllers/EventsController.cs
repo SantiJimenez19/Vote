@@ -10,22 +10,22 @@ using Vote.Web.Data.Entities;
 
 namespace Vote.Web.Controllers
 {
-    public class UsersController : Controller
+    public class EventsController : Controller
     {
         private readonly DataContext _context;
 
-        public UsersController(DataContext context)
+        public EventsController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: Users
+        // GET: Events
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Events.ToListAsync());
         }
 
-        // GET: Users/Details/5
+        // GET: Events/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace Vote.Web.Controllers
                 return NotFound();
             }
 
-            var users = await _context.User
+            var @event = await _context.Events
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(users);
+            return View(@event);
         }
 
-        // GET: Users/Create
+        // GET: Events/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Events/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,LastName,Country,City,Occupation,Stratum,Gender,Birthdate")] Users users)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Candidates,Votes,StartDate,EndDate")] Event @event)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(users);
+                _context.Add(@event);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(@event);
         }
 
-        // GET: Users/Edit/5
+        // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace Vote.Web.Controllers
                 return NotFound();
             }
 
-            var users = await _context.User.FindAsync(id);
-            if (users == null)
+            var @event = await _context.Events.FindAsync(id);
+            if (@event == null)
             {
                 return NotFound();
             }
-            return View(users);
+            return View(@event);
         }
 
-        // POST: Users/Edit/5
+        // POST: Events/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,LastName,Country,City,Occupation,Stratum,Gender,Birthdate")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Candidates,Votes,StartDate,EndDate")] Event @event)
         {
-            if (id != users.Id)
+            if (id != @event.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace Vote.Web.Controllers
             {
                 try
                 {
-                    _context.Update(users);
+                    _context.Update(@event);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsersExists(users.Id))
+                    if (!EventExists(@event.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace Vote.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(@event);
         }
 
-        // GET: Users/Delete/5
+        // GET: Events/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace Vote.Web.Controllers
                 return NotFound();
             }
 
-            var users = await _context.User
+            var @event = await _context.Events
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
+            if (@event == null)
             {
                 return NotFound();
             }
 
-            return View(users);
+            return View(@event);
         }
 
-        // POST: Users/Delete/5
+        // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var users = await _context.User.FindAsync(id);
-            _context.User.Remove(users);
+            var @event = await _context.Events.FindAsync(id);
+            _context.Events.Remove(@event);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsersExists(int id)
+        private bool EventExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Events.Any(e => e.Id == id);
         }
     }
 }

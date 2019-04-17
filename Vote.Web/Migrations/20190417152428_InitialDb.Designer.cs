@@ -10,7 +10,7 @@ using Vote.Web.Data;
 namespace Vote.Web.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190412135141_InitialDb")]
+    [Migration("20190417152428_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace Vote.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Vote.Web.Data.Entities.Results", b =>
+            modelBuilder.Entity("Vote.Web.Data.Entities.Event", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,7 +41,7 @@ namespace Vote.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Events");
                 });
 #pragma warning restore 612, 618
         }
