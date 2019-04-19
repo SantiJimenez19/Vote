@@ -6,12 +6,12 @@ namespace Vote.Web.Data
 {
     public interface IRepository
     {
-        void AddProduct(Event product);
-        Event GetProduct(int id);
-        IEnumerable<Event> GetProducts();
-        bool ProductExists(int id);
-        void RemoveProduct(Event product);
+        void AddEvent(Event events);
+        Event GetEvent(int id);
+        IEnumerable<Event> GetEvents();
+        bool EventExists(int id);
+        void RemoveEvent(Event events);
         Task<bool> SaveAllAsync();
-        void UpdateProduct(Event product);
+        void UpdateEvent(Event events);
     }
 }

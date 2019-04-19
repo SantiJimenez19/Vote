@@ -1,46 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Vote.Web.Data;
-using Vote.Web.Data.Entities;
+﻿
 
 namespace Vote.Web.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
+    using Vote.Web.Data;
+    using Vote.Web.Data.Entities;
+
     public class EventsController : Controller
     {
-        private readonly DataContext _context;
+        private readonly IRepository repository;
 
-        public EventsController(DataContext context)
+        public EventsController(IRepository repository)
         {
-            _context = context;
+            this.repository = repository;
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Events.ToListAsync());
+            return View(this.repository.GetEvents());
         }
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
+            var events = this.repository.GetEvent(id.Value);
+
+            if (events == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            return View(events);
         }
 
         // GET: Events/Create
@@ -54,31 +52,31 @@ namespace Vote.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Candidates,Votes,StartDate,EndDate")] Event @event)
+        public async Task<IActionResult> Create(Event events)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(@event);
-                await _context.SaveChangesAsync();
+                this.repository.AddEvent(events);
+                await this.repository.SaveAllAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(events);
         }
 
         // GET: Events/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events.FindAsync(id);
-            if (@event == null)
+            var events = this.repository.GetEvent(id.Value);
+            if (events == null)
             {
                 return NotFound();
             }
-            return View(@event);
+            return View(events);
         }
 
         // POST: Events/Edit/5
@@ -86,23 +84,20 @@ namespace Vote.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Candidates,Votes,StartDate,EndDate")] Event @event)
+        public IActionResult Edit(Event events)
         {
-            if (id != @event.Id)
-            {
-                return NotFound();
-            }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(@event);
-                    await _context.SaveChangesAsync();
+                    this.repository.UpdateEvent(events);
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EventExists(@event.Id))
+                    if (!this.repository.EventExists(events.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +108,38 @@ namespace Vote.Web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(@event);
+            return View(events);
         }
 
         // GET: Events/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @event = await _context.Events
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (@event == null)
+            var events = this.repository.GetEvent(id.Value);
+
+            if (events == null)
             {
                 return NotFound();
             }
 
-            return View(@event);
+            return View(events);
         }
 
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task <IActionResult> DeleteConfirmed(int id)
         {
-            var @event = await _context.Events.FindAsync(id);
-            _context.Events.Remove(@event);
-            await _context.SaveChangesAsync();
+            var events = this.repository.GetEvent(id);
+            this.repository.RemoveEvent(events);
+            await this.repository.SaveAllAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EventExists(int id)
-        {
-            return _context.Events.Any(e => e.Id == id);
-        }
+        
     }
 }

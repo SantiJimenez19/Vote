@@ -13,9 +13,9 @@ namespace Vote.Web.Data.Repositories
     using Microsoft.EntityFrameworkCore;
     using Models;
 
-    public class CountryRepository : GenericRepository<Country>, ICountryRepository
+    public class CountryRepository //:<Country>, ICountryRepository
     {
-        private readonly DataContext context;
+     /*   private readonly DataContext context;
 
         public CountryRepository(DataContext context) : base(context)
         {
@@ -125,7 +125,7 @@ namespace Vote.Web.Data.Repositories
             return await this.context.Countries
                 .Where(c => c.Cities.Any(ci => ci.Id == city.Id))
                 .FirstOrDefaultAsync();
-        }
+        }*/
 
     }
 }

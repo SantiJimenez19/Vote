@@ -10,35 +10,34 @@ namespace Vote.Web.Data
     {
         private readonly DataContext context;
 
-
         public Repository(DataContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<Event> GetProducts()
+        public IEnumerable<Event> GetEvents()
         {
             return this.context.Events.OrderBy(e => e.Name);
         }
 
-        public Event GetProduct(int id)
+        public Event GetEvent(int id)
         {
             return this.context.Events.Find(id);
         }
 
-        public void AddProduct(Event product)
+        public void AddEvent(Event events)
         {
-            this.context.Events.Add(product);
+            this.context.Events.Add(events);
         }
 
-        public void UpdateProduct(Event product)
+        public void UpdateEvent(Event events)
         {
-            this.context.Update(product);
+            this.context.Update(events);
         }
 
-        public void RemoveProduct(Event product)
+        public void RemoveEvent(Event events)
         {
-            this.context.Events.Remove(product);
+            this.context.Events.Remove(events);
         }
 
         public async Task<bool> SaveAllAsync()
@@ -46,13 +45,11 @@ namespace Vote.Web.Data
             return await this.context.SaveChangesAsync() > 0;
         }
 
-        public bool ProductExists(int id)
+        public bool EventExists(int id)
         {
             return this.context.Events.Any(e => e.Id == id);
         }
     }
 
-
-
 }
-}
+
