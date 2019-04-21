@@ -20,6 +20,9 @@ namespace Vote.Web.Data
 
            public DbSet<Vote> Votes { get; set; }*/
 
+
+        public DbSet<Candidate> Candidates { get; set; }
+
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
