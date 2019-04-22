@@ -24,7 +24,7 @@ namespace Vote.Web.Controllers
         // GET: Events
         public IActionResult Index()
         {
-            return View(this.eventRepository.GetAll());
+            return View(this.eventRepository.GetAll() ) ;
         }
 
         // GET: Events/Details/5
@@ -139,6 +139,16 @@ namespace Vote.Web.Controllers
             await this.eventRepository.DeleteAsync(events);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public IActionResult GetEvents()
+        {
+            return Ok(this.eventRepository.GetAll());
+
+        }
+
+
+
     }
 
 }

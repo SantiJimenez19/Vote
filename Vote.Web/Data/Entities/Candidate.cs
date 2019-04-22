@@ -21,6 +21,18 @@ namespace Vote.Web.Data.Entities
         public int  Votes { get; set; }
 
         public User User { get; set; }
+        public string ImagenFullPath
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.ImageUrl))
+                {
+                    return null;
+                }
+
+                return $"https://vote2020web.azurewebsites.net{this.ImageUrl.Substring(1)}";
+            }
+        }
 
     }
 }
