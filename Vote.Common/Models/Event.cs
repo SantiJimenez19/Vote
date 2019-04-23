@@ -29,7 +29,11 @@ namespace Vote.Common.Models
         [JsonProperty("user")]
         public User User { get; set; }
 
-
+        public override string ToString()
+        {
+            return $"{ this.Name} { this.Description}";
+   
+        }
 
     }
 

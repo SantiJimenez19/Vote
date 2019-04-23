@@ -10,8 +10,41 @@
             BindingContext="{Binding Events}"
             Padding="8">
             <ListView
+                IsRefreshing="{Binding IsRefreshing }"
                 HasUnevenRows="True"
                 ItemsSource="{Binding Events}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                           
+                            <StackLayout
+                                	Grid.Column="1"
+                                	VerticalOptions="Center">
+                                <Label
+                                    	FontAttributes="Bold"
+                                    	FontSize="Medium"
+                                    	Text="{Binding Name}"
+                                    	TextColor="Black">
+                                </Label>
+
+                                <Label
+                                        FontAttributes="Bold"
+                                    	FontSize="Medium"
+                                    	Text="{Binding Description}"
+                                    	TextColor="Navy">
+                                </Label>
+
+                                </StackLayout>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+                </ListView.ItemTemplate>
+
             </ListView>
         </StackLayout>
     </ContentPage.Content>
