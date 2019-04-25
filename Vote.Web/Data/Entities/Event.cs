@@ -24,7 +24,7 @@ namespace Vote.Web.Data.Entities
         public int Candidates { get; set; }
 
 
-        [Display(Name = "Number Votes")]
+
         public int Votes { get; set; }
 
 

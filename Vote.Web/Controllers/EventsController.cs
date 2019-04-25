@@ -3,12 +3,14 @@
 namespace Vote.Web.Controllers
 {
     using Helpers;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
     using Vote.Web.Data;
     using Vote.Web.Data.Entities;
 
+    [Authorize]
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
@@ -57,8 +59,8 @@ namespace Vote.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // TODO: Pending to change to: this.User.Identity.Name
-                events.User = await this.userHelper.GetUserByEmailAsync("santisuarez1100@gmail.com");
+
+                events.User = await this.userHelper.GetUserByEmailAsync(this.User.Identity.Name);
                 await this.eventRepository.CreateAsync(events);
                 return RedirectToAction(nameof(Index));
             }
