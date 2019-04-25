@@ -1,12 +1,16 @@
 ﻿
 namespace Vote.Web.Controllers.API
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-
-    using Vote.Web.Data;
+    
+    using Web.Data;
 
 
     [Route("api/[Controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
@@ -22,5 +26,7 @@ namespace Vote.Web.Controllers.API
             return Ok(this.eventRepository.GetallWithUsers());
 
         }
+
+
     }
 }

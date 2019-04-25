@@ -10,7 +10,7 @@ namespace Vote.Web.Controllers
     using Vote.Web.Data;
     using Vote.Web.Data.Entities;
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class EventsController : Controller
     {
         private readonly IEventRepository eventRepository;
@@ -34,13 +34,15 @@ namespace Vote.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             var events = await this.eventRepository.GetByIdAsync(id.Value);
             if (events == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             return View(events);
@@ -73,13 +75,15 @@ namespace Vote.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             var events = await this.eventRepository.GetByIdAsync(id.Value);
             if (events == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             return View(events);
@@ -102,7 +106,8 @@ namespace Vote.Web.Controllers
                 {
                     if (!await this.eventRepository.ExistAsync(events.Id))
                     {
-                        return NotFound();
+                        return new NotFoundViewResult("EventNotFound");
+
                     }
                     else
                     {
@@ -120,13 +125,15 @@ namespace Vote.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             var events = await this.eventRepository.GetByIdAsync(id.Value);
             if (events == null)
             {
-                return NotFound();
+                return new NotFoundViewResult("EventNotFound");
+
             }
 
             return View(events);
@@ -148,6 +155,13 @@ namespace Vote.Web.Controllers
             return Ok(this.eventRepository.GetAll());
 
         }
+
+        public IActionResult ProductNotFound()
+        {
+            return this.View();
+        }
+
+
 
 
 

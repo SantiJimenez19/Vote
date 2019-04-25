@@ -12,6 +12,8 @@ namespace Vote.Web
     using Data;
     using Data.Entities;
     using Helpers;
+    using Microsoft.IdentityModel.Tokens;
+    using System.Text;
 
     public class Startup
     {
@@ -38,6 +40,19 @@ namespace Vote.Web
             })
         .AddEntityFrameworkStores<DataContext>();
 
+            services.AddAuthentication()
+                .AddCookie()
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidIssuer = this.Configuration["Tokens:Issuer"],
+                        ValidAudience = this.Configuration["Tokens:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            Encoding.UTF8.GetBytes(this.Configuration["Tokens:Key"]))
+                    };
+                });
+
 
 
             services.AddDbContext<DataContext>(cfg =>
@@ -57,6 +72,13 @@ namespace Vote.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
+
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -72,8 +94,9 @@ namespace Vote.Web
             {
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
-            }
 
+            }
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
